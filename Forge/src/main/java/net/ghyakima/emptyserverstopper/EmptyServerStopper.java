@@ -12,7 +12,7 @@ import net.minecraftforge.network.NetworkConstants;
 
 @Mod(Constants.MOD_ID)
 public class EmptyServerStopper {
-    
+
     public EmptyServerStopper() {
         CommonClass.init();
         ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
@@ -26,7 +26,9 @@ public class EmptyServerStopper {
 
     @SubscribeEvent
     public void onServerStopping(ServerStoppingEvent event) {
-        CommonClass.timer.cancel();
+        if (CommonClass.timer != null) {
+            CommonClass.timer.cancel();
+        }
     }
 
     @SubscribeEvent
